@@ -1,6 +1,6 @@
 package com.github.choonchernlim.modularizer.core
 
-
+import example.*
 import org.springframework.context.ApplicationContext
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -10,71 +10,6 @@ class ModularizerService_create_Spec extends Specification {
     def context = Mock ApplicationContext
     def modularizerFingerprintService = new ModularizerFingerprintService()
     def modularizerService = new ModularizerService(context, modularizerFingerprintService)
-
-    static class PersonEntity implements ModularizerEntity {
-        String email
-        String lastName
-        String firstName
-
-        @Override
-        String getModularizerId() {
-            return email
-        }
-    }
-
-    static class PersonResult extends ModularizerResult {
-        static class PersonSummary extends ModularizerResultModule {
-            @ModularizerFingerprint
-            String name
-        }
-
-        static class PersonDetail extends ModularizerResultModule {
-            @ModularizerFingerprint
-            String email
-
-            String lastName
-            String firstName
-        }
-
-        @ModularizerFingerprint
-        PersonSummary summary
-
-        @ModularizerFingerprint
-        PersonDetail detail
-    }
-
-    static class PersonSummaryModuleMapper implements ModularizerResultModuleMapper<PersonEntity, PersonResult.PersonSummary> {
-        @Override
-        PersonResult.PersonSummary map(final PersonEntity entity) {
-            return new PersonResult.PersonSummary(
-                    name: "${entity.lastName}, ${entity.firstName}"
-            )
-        }
-    }
-
-    static class PersonDetailModuleMapper implements ModularizerResultModuleMapper<PersonEntity, PersonResult.PersonDetail> {
-        @Override
-        PersonResult.PersonDetail map(final PersonEntity entity) {
-            return new PersonResult.PersonDetail(
-                    email: entity.email,
-                    lastName: entity.lastName,
-                    firstName: entity.firstName
-            )
-        }
-    }
-
-    static enum PersonModuleEnum implements ModularizerResultModuleConfig {
-        SUMMARY('summary', PersonSummaryModuleMapper),
-        DETAIL('detail', PersonDetailModuleMapper)
-
-        final String moduleName
-        final Class<ModularizerResultModuleMapper> moduleMapperClass
-
-        PersonModuleEnum(final String moduleName, final Class<ModularizerResultModuleMapper> moduleMapperClass) {
-            this.moduleName = moduleName
-            this.moduleMapperClass = moduleMapperClass
-        }
-    }
 
     static final PersonEntity PERSON_ENTITY = new PersonEntity(
             lastName: 'Bond',
