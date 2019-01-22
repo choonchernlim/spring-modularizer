@@ -1,6 +1,6 @@
 # spring-modularizer [![Build Status](https://travis-ci.org/choonchernlim/spring-modularizer.svg?branch=master)](https://travis-ci.org/choonchernlim/spring-modularizer) [![codecov](https://codecov.io/gh/choonchernlim/spring-modularizer/branch/master/graph/badge.svg)](https://codecov.io/gh/choonchernlim/spring-modularizer)
 
-A design pattern to transform an input object into a modularized result object based on the requested data module(s).
+Transforms an input object into a modularized result object based on the requested data module(s).
 
 ## Maven Dependency
 
@@ -12,38 +12,41 @@ A design pattern to transform an input object into a modularized result object b
 </dependency>
 ```
 
-## Use Case
+## Motivation
 
-Given a scenario where the user requests module A and module C, the generated result object will contain just the requested modules.
+To provide an ability to enrich the result object by adding more data modules over time without introducing too many cross cutting concerns.
 
-The generated fingerprints allow the user to quickly determine whether the values have changed.
 
-```
-     RAW DATA                       TRANSFORMATION                           RESULT
-                                                             
-ORM entity, ID, etc.           Either cherry-picking from            Result object that can be 
-                               input object or query against         sent back to the user either
-                               data source(s) to construct           as object, JSON or XML.
-                               module objects.                 
-                                                             
-                                                             
-                                                                     {
-                                                                        "id": "<some-id>",
-                                                                        "fingerprint": "<some-fingerprint>"
-                                                                        "a": {
-                                                                            "fingerprint": "<some-fingerprint>",
-                                   ✓ [ Mapper A   ]                         "prop-1": ...
-                                     [ Mapper B   ]                         "prop-2": ...
-    Input Object       --->        ✓ [ Mapper C   ]           --->      },
-                                     [ Mapper D   ]                     "b": null,
-                                     [ Mapper ... ]                     "c": {
-                                     [ Mapper Z   ]                         "fingerprint": "<some-fingerprint>",
-                                                                            "prop-3": ...
-                                                                            "prop-4": ...
-                                                                        },
-                                                                        "d": null,
-                                                                        ...
-                                                                     }
+
+```text
+---------------------------------------------------------------------------------------------------------                                                      
+     RAW DATA                 TRANSFORMATION                        RESULT
+---------------------------------------------------------------------------------------------------------                                                      
+ORM entity, ID, etc.     Either cherry-picking from         Result object that can be 
+                         input object or query against      sent back to the user either
+                         data source(s) to construct        as object, JSON or XML.
+                         requested module(s).               The fingerprints allow the 
+                                                            user to quickly determine 
+                                                            whether the values have changed.
+                                                      
+                                                      
+                                                             {
+                                                                "id": "<some-id>",
+                                                                "fingerprint": "<some-fingerprint>"
+                                                                "a": {
+                                                                    "fingerprint": "<some-fingerprint>",
+                              ✓ [ Mapper A   ]                      "prop-1": ...
+                                [ Mapper B   ]                      "prop-2": ...
+    Input Object    --->      ✓ [ Mapper C   ]        --->      },
+                                [ Mapper D   ]                  "b": null,
+                                [ Mapper ... ]                  "c": {
+                                [ Mapper Z   ]                      "fingerprint": "<some-fingerprint>",
+                                                                    "prop-3": ...
+                                                                    "prop-4": ...
+                                                                },
+                                                                "d": null,
+                                                                ...
+                                                             }
 ```
 
 At high level, the code looks something like this:- 
@@ -57,7 +60,6 @@ SomeEntity entity = // query from DB, etc
 SomeResult result = modularizerService.create(entity, selectedModules, SomeResult)
 ```
     
-## Example
+## Real World Example
 
-The best way to understand this API is to run `Main.groovy` under [`example` package](src/test/groovy/example) 
-and play around with it.
+Run `Main.groovy` under ["example" package](src/test/groovy/example) and play around with it.

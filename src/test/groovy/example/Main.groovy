@@ -63,7 +63,7 @@ class Main {
         /*
         Notes:
         - The root fingerprint changes because it contains "details" payload now.
-        - "summary" fingerprint matches value from `personResult1`.
+        - Both `personResult1` and `personResult2` has the same "summary" fingerprint value because the content is the same.
         
         {
             "id": "james.bond@gmail.com",
