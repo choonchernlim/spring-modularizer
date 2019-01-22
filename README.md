@@ -22,12 +22,11 @@ To provide an ability to enrich the result object by adding more data modules ov
 ---------------------------------------------------------------------------------------------------------
      RAW DATA                 TRANSFORMATION                        RESULT
 ---------------------------------------------------------------------------------------------------------
-ORM entity, ID, etc.     Either cherry-picking from         Result object that can be 
-                         input object or query against      sent back to the user either
-                         data source(s) to construct        as object, JSON or XML.
-                         requested module(s).               The fingerprints allow the 
-                                                            user to quickly determine 
-                                                            whether the values have changed.
+ORM entity, ID, etc.     Either cherry-picking from         Result object that can be sent back to the 
+                         input object or query against      user either as object, JSON or XML.
+                         data source(s) to construct        The fingerprints allow the user to quickly 
+                         requested module(s).               determine whether the values have changed 
+                                                            or not.                                                                   
                                                       
                                                       
                                                              {
