@@ -19,9 +19,9 @@ To provide an ability to enrich the result object by adding more data modules ov
 
 
 ```text
----------------------------------------------------------------------------------------------------------                                                      
+---------------------------------------------------------------------------------------------------------
      RAW DATA                 TRANSFORMATION                        RESULT
----------------------------------------------------------------------------------------------------------                                                      
+---------------------------------------------------------------------------------------------------------
 ORM entity, ID, etc.     Either cherry-picking from         Result object that can be 
                          input object or query against      sent back to the user either
                          data source(s) to construct        as object, JSON or XML.
