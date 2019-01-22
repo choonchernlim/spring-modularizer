@@ -1,6 +1,5 @@
 package com.github.choonchernlim.modularizer.core
 
-
 import org.springframework.context.ApplicationContext
 
 /**
@@ -42,8 +41,10 @@ class ModularizerService {
             return [(fieldName): moduleData]
         } as HashMap<String, Object>
 
-        map['id'] = entity.modularizerId
+        final T result = outputClass.newInstance(map)
 
-        return fingerprintService.withFingerprint(outputClass.newInstance(map))
+        return fingerprintService.withFingerprint(
+                ModularizerUtils.setFieldValueByReflection(result, 'id', entity.modularizerId)
+        )
     }
 }

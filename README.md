@@ -8,7 +8,7 @@ Transforms an input object into a modularized result object based on the request
 <dependency>
     <groupId>com.github.choonchernlim</groupId>
     <artifactId>spring-modularizer</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1.0</version>
 </dependency>
 ```
 

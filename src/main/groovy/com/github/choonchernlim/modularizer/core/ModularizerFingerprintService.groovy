@@ -19,17 +19,11 @@ class ModularizerFingerprintService {
     def <T extends ModularizerFingerprintable> T withFingerprint(final T modularizerFingerprintable) {
         assert modularizerFingerprintable
 
-        // recursively find declared field called `fingerprint` 
-        Class clazz = modularizerFingerprintable.class
-        while (!clazz.declaredFields.any { it.name == 'fingerprint' }) {
-            clazz = clazz.superclass
-        }
-
-        final Field field = clazz.getDeclaredField('fingerprint')
-        field.setAccessible(true)
-        field.set(modularizerFingerprintable, createFingerprintByAnnotation(modularizerFingerprintable))
-
-        return modularizerFingerprintable
+        return ModularizerUtils.setFieldValueByReflection(
+                modularizerFingerprintable,
+                'fingerprint',
+                createFingerprintByAnnotation(modularizerFingerprintable)
+        )
     }
 
     /**

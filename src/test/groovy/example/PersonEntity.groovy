@@ -1,10 +1,12 @@
 package example
 
 import com.github.choonchernlim.modularizer.core.ModularizerEntity
+import groovy.transform.Immutable
 
 /**
  * This class contains the raw data needed by the mapper classes to create the data module beans.
  */
+@Immutable
 class PersonEntity implements ModularizerEntity {
     String email
     String lastName
